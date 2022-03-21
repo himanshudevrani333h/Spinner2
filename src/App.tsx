@@ -23,13 +23,14 @@ export default function App() {
     2: "$2k",
     3: "$32",
     4: "$500k",
-    6: "$6m",
-    7: "$7b",
-    8: "$0.8"
+    5: "$6m",
+    6: "$7b",
+    7: "$0.8",
+    8:"$4"
   };
 
   const onClick = () => {
-    const newCouponNum = getRandomInt(1, 8);
+    const newCouponNum = getRandomInt(1, 9);
     setCouponNum(newCouponNum);
     setResult("")
     console.log(newCouponNum);
