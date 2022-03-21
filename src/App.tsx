@@ -1,26 +1,64 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import React, { useState } from "react";
+import { Wheel } from "./components/Roulette";
+import { getRandomInt } from "./utils/utils";
+import * as Styles from "./App_style"
+
+
+export default function App() {
+  const [couponNum, setCouponNum] = useState(1);
+  const [mustSpin, setMustSpin] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [result,setResult] = useState<any>('');
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const mockData:any = {
+    1: "$1",
+    2: "$2k",
+    3: "$32",
+    4: "$500k",
+    6: "$6m",
+    7: "$7b",
+    8: "$0.8"
+  };
+
+  const onClick = () => {
+    const newCouponNum = getRandomInt(1, 8);
+    setCouponNum(newCouponNum);
+    setResult("")
+    console.log(newCouponNum);
+    console.log(couponNum);
+    setMustSpin(true);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Styles.App>
+      <span className="h1">Spinning</span>
+      <span className="h2">Wheel</span>
+      <Styles.WheelContainer>
+        <Wheel
+          mustStartSpinning={mustSpin}
+          prizeNumber={couponNum}
+          onStopSpinning={() => {
+            setMustSpin(false);
+            setResult(couponNum);
+            handleOpen();
+          }}
+        />
+      </Styles.WheelContainer>
+
+      <Styles.SpinButton
+        src="https://github.com/weibenfalk/wheel-of-fortune-part2/blob/main/vanilla-js-wheel-of-fortune-part2-FINISHED/button.png?raw=true"
+        alt="button"
+        onClick={() => onClick()}
+      />
+       <Styles.SpanTag>You Won:   {mockData[result]}</Styles.SpanTag>
+    </Styles.App>
   );
 }
-
-export default App;
